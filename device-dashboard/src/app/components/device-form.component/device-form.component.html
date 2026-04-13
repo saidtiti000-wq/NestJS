@@ -1,0 +1,71 @@
+<div class="form-container">
+	<form (ngSubmit)="onSubmit()" #deviceForm="ngForm">
+		<div class="form-group">
+			<label for="name">Nom de l'equipement </label>
+			<input
+				type="text"
+				id="name"
+				name="name"
+				[(ngModel)]="device.name"
+				required
+				placeholder="Ex: LAPTOP-DEV-01"
+			/>
+		</div>
+
+		<div class="form-group">
+			<label for="type">Type </label>
+			<select id="type" name="type" [(ngModel)]="device.type" required>
+				<option value="" disabled>Selectionnez un type</option>
+				<option value="Laptop">Laptop</option>
+				<option value="Desktop">Desktop</option>
+				<option value="Serveur">Serveur</option>
+				<option value="Imprimante">Imprimante</option>
+				<option value="Switch">Switch</option>
+				<option value="Routeur">Routeur</option>
+				<option value="Camera">Camera</option>
+				<option value="Stockage">Stockage (NAS)</option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="status">Statut </label>
+			<div class="status-selector">
+				<label class="status-radio online" [class.active]="device.status === 'online'">
+					<input type="radio" name="status" [(ngModel)]="device.status" value="online" />
+					En ligne
+				</label>
+				<label class="status-radio offline" [class.active]="device.status === 'offline'">
+					<input type="radio" name="status" [(ngModel)]="device.status" value="offline" />
+					Hors ligne
+				</label>
+				<label class="status-radio maintenance" [class.active]="device.status === 'maintenance'">
+					<input type="radio" name="status" [(ngModel)]="device.status" value="maintenance" />
+					Maintenance
+				</label>
+				
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="form-group half">
+				<label for="ip">Adresse IP</label>
+				<input type="text" id="ip" name="ip" [(ngModel)]="device.ip" placeholder="Ex: 192.168.1.10" />
+			</div>
+
+			<div class="form-group half">
+				<label for="os">Systeme d'exploitation</label>
+				<input type="text" id="os" name="os" [(ngModel)]="device.os" placeholder="Ex: Windows 11" />
+			</div>
+		</div>
+
+		<div class="form-actions">
+			<button type="submit" class="btn-submit" [disabled]="!deviceForm.form.valid || isSubmitting">
+				@if (!isSubmitting) {
+					<span>{{ submitLabel }}</span>
+				} @else {
+					<span>{{ submittingLabel }}</span>
+				}
+			</button>
+		</div>
+	</form>
+</div>

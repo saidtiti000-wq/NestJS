@@ -1,0 +1,16 @@
+<div class="device-card">
+  <div class="card-top">
+    <span class="icon">{{ getIcon() }}</span>
+    <div class="top-actions">
+      <span class="badge" [ngClass]="device.status">{{ getStatusLabel() }}</span>
+      <button class="btn-action edit" [routerLink]="['/edit', device.id]" title="Modifier">EDIT</button>
+      <button class="btn-action delete" (click)="onDelete($event)" title="Supprimer">DELETE</button>
+    </div>
+  </div>
+  <p class="device-name">{{ device.name }}</p>
+  <p class="device-type">{{ device.type }} · {{ device.os }}</p>
+  <div class="device-meta">
+    <span>{{ device.ip }}</span>
+    <span>{{ device.lastSeen }}</span>
+  </div>
+</div>

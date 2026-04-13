@@ -1,0 +1,20 @@
+<div class="add-device-page">
+    <div class="header">
+        <div class="logo" routerLink="/">IT</div>
+        <div>
+            <h1>Nouvel Équipement</h1>
+            <span>Ajouter à l'inventaire</span>
+        </div>
+        <div class="actions">
+            <button class="btn-cancel" routerLink="/">RETOURNER</button>
+        </div>
+    </div>
+
+    <app-device-form
+        [device]="newDevice"
+        [isSubmitting]="isSubmitting"
+        [submitLabel]="'Ajouter l equipement'"
+        [submittingLabel]="'Ajout en cours...'"
+        (submitted)="onSubmit()"
+    ></app-device-form>
+</div>

@@ -1,0 +1,61 @@
+<div class="dashboard">
+
+  <div class="header">
+    <div class="logo">IT</div>
+    <div>
+      <h1>Device Dashboard</h1>
+      <span>Capgemini · POC 2 (CRUD)</span>
+    </div>
+    <button class="add-device-btn" routerLink="/add"> Ajouter un équipement</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <p class="stat-label">Total</p>
+      <p class="stat-value">{{ stats.total }}</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">En ligne</p>
+      <p class="stat-value online">{{ stats.online }}</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">Hors ligne</p>
+      <p class="stat-value offline">{{ stats.offline }}</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">Maintenance</p>
+      <p class="stat-value maint">{{ stats.maintenance }}</p>
+    </div>
+  </div>
+
+  
+  <div class="controls">
+    <input type="text" placeholder="Rechercher un device..." [(ngModel)]="searchQuery" (input)="onSearch()" />
+    <div class="filter-group">
+      @for (f of filters; track f) {
+        <button [class.active]="activeFilter === f" (click)="onFilter(f)">
+          {{ getFilterLabel(f) }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-wrapper">
+      <app-spinner [message]="'Chargement des équipements...'" />
+    </div>
+  } @else {
+    <p class="result-count">{{ devices.length }} device(s) trouvé(s)</p>
+
+    @if (devices.length > 0) {
+      <div class="device-grid">
+        @for (device of devices; track device.id) {
+          <app-device-card [device]="device"></app-device-card>
+        }
+      </div>
+    } @else {
+      <p class="empty-msg">Aucun device ne correspond à ta recherche.</p>
+    }
+  }
+
+</div>
