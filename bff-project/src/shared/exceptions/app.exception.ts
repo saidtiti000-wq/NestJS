@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
+// Classe de base pour toutes les exceptions personnalisées de l'application
 export class AppException extends HttpException {
   constructor(
     private errorCode: string,
@@ -17,6 +18,7 @@ export class AppException extends HttpException {
     );
   }
 
+  // Retourne le code d'erreur spécifique à l'application
   getErrorCode(): string {
     return this.errorCode;
   }

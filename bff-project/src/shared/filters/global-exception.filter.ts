@@ -4,14 +4,23 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
+  Injectable,
+  NestInterceptor,
+  ExecutionContext,
+  CallHandler,
 } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { LoggerService } from '../logger/logger.service';
+import { ERROR_CODES, ERROR_MESSAGES } from '../exceptions/error.constants';
 
 @Catch()
+// Filtre global pour intercepter et formater toutes les exceptions de l'application
 export class GlobalExceptionFilter implements ExceptionFilter {
   constructor(private readonly loggerService: LoggerService) {}
 
   catch(exception: unknown, host: ArgumentsHost) {
+    // Récupération du contexte HTTP (Request, Response)
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest();
@@ -19,8 +28,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
     let errorResponse = {
       success: false,
-      errorCode: 'INTERNAL_SERVER_ERROR',
-      message: 'An unexpected error occurred',
+      errorCode: ERROR_CODES.INTERNAL_SERVER_ERROR,
+      message: ERROR_MESSAGES.INTERNAL_SERVER_ERROR,
       timestamp: new Date().toISOString(),
     };
 

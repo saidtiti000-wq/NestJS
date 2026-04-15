@@ -49,12 +49,39 @@
 		<div class="form-row">
 			<div class="form-group half">
 				<label for="ip">Adresse IP</label>
-				<input type="text" id="ip" name="ip" [(ngModel)]="device.ip" placeholder="Ex: 192.168.1.10" />
+				<input 
+					type="text" 
+					id="ip" 
+					name="ip" 
+					[(ngModel)]="device.ip" 
+					#ip="ngModel"
+					required
+					placeholder="Ex: 192.168.1.10"
+					pattern="^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+				/>
+				@if (ip.invalid && (ip.dirty || ip.touched)) {
+					@if (ip.errors?.['required']) {
+						<small class="error-text">L'adresse IP est obligatoire</small>
+					} @else if (ip.errors?.['pattern']) {
+						<small class="error-text">Format IP invalide (ex: 192.168.1.10)</small>
+					}
+				}
 			</div>
 
 			<div class="form-group half">
-				<label for="os">Systeme d'exploitation</label>
-				<input type="text" id="os" name="os" [(ngModel)]="device.os" placeholder="Ex: Windows 11" />
+				<label for="os">Système d'exploitation</label>
+				<input 
+					type="text" 
+					id="os" 
+					name="os" 
+					[(ngModel)]="device.os" 
+					#os="ngModel"
+					required
+					placeholder="Ex: Windows 11" 
+				/>
+				@if (os.invalid && (os.dirty || os.touched)) {
+					<small class="error-text">Le système d'exploitation est obligatoire</small>
+				}
 			</div>
 		</div>
 

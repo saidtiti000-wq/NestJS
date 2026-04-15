@@ -1,52 +1,37 @@
 import { AppException } from './app.exception';
 import { HttpStatus } from '@nestjs/common';
+import { ERROR_CODES, ERROR_MESSAGES } from './error.constants';
 
+
+// Erreur lancée lorsqu'un appareil n'est pas trouvé dans la base de données
 export class DeviceNotFoundException extends AppException {
   constructor(id?: string) {
     super(
-      'DEVICE_NOT_FOUND',
-      `Device ${id ? `with ID ${id}` : ''} not found`,
+      ERROR_CODES.DEVICE_NOT_FOUND,
+      id ? `Device with ID ${id} not found` : ERROR_MESSAGES.DEVICE_NOT_FOUND,
       HttpStatus.NOT_FOUND,
     );
   }
 }
 
+// Erreur lancée lorsque le statut d'un appareil n'est pas une valeur autorisée
 export class InvalidDeviceStatusException extends AppException {
   constructor(status: string) {
     super(
-      'INVALID_DEVICE_STATUS',
-      `Invalid device status: ${status}`,
+      ERROR_CODES.INVALID_DEVICE_STATUS,
+      `${ERROR_MESSAGES.INVALID_DEVICE_STATUS}: ${status}`,
       HttpStatus.BAD_REQUEST,
     );
   }
 }
 
+// Erreur lancée lors d'une tentative de création d'un appareil déjà existant (Nom ou IP)
 export class DuplicateDeviceException extends AppException {
   constructor(field: string, value: string) {
     super(
-      'DUPLICATE_DEVICE',
+      ERROR_CODES.DUPLICATE_DEVICE,
       `Device with ${field} "${value}" already exists`,
       HttpStatus.CONFLICT,
-    );
-  }
-}
-
-export class InvalidInputException extends AppException {
-  constructor(message: string) {
-    super(
-      'INVALID_INPUT',
-      message,
-      HttpStatus.BAD_REQUEST,
-    );
-  }
-}
-
-export class InternalServerException extends AppException {
-  constructor(message: string = 'An unexpected error occurred') {
-    super(
-      'INTERNAL_SERVER_ERROR',
-      message,
-      HttpStatus.INTERNAL_SERVER_ERROR,
     );
   }
 }

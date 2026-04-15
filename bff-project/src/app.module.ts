@@ -6,10 +6,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
+    // Configuration globale des variables d'environnement (.env)
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
     }),
+    // Connexion asynchrone à la base de données MongoDB
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -17,9 +19,10 @@ import { MongooseModule } from '@nestjs/mongoose';
         uri: configService.get<string>('MONGODB_URI'),
       }),
     }),
+    // Importation des modules fonctionnels
     DevicesModule,
+    // Importation du module transverse (Logger, Filtres, etc.)
     SharedModule,
   ],
 })
 export class AppModule {}
-``

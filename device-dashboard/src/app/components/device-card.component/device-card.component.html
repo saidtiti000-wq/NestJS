@@ -10,7 +10,7 @@
   <p class="device-name">{{ device.name }}</p>
   <p class="device-type">{{ device.type }} · {{ device.os }}</p>
   <div class="device-meta">
-    <span>{{ device.ip }}</span>
-    <span>{{ device.lastSeen }}</span>
+    <span class="ip-address">{{ device.ip }}</span>
+    <span class="last-seen">Vu le : {{ device.lastSeen | date:'dd/MM/yyyy HH:mm' }}</span>
   </div>
 </div>

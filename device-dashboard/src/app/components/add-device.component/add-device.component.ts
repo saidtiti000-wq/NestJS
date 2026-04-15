@@ -16,7 +16,8 @@ export class AddDeviceComponent {
     newDevice: Partial<Device> = {
         status: 'online',
         os: 'Unknown',
-        ip: '0.0.0.0'
+        ip: '0.0.0.0',
+        lastSeen: new Date().toISOString()
     };
 
     isSubmitting = false;

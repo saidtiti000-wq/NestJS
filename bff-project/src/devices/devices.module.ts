@@ -8,10 +8,13 @@ import { SharedModule } from '../shared/shared.module';
 
 @Module({
   imports: [
+    // Configuration de Mongoose pour l'entité Device
     MongooseModule.forFeature([{ name: Device.name, schema: DeviceSchema }]),
+    // Importation du module partagé (Logger, etc.)
     SharedModule,
   ],
   controllers: [DevicesController],
+  // Déclaration du service métier et de son repository
   providers: [DevicesService, DeviceRepository],
 })
 export class DevicesModule {}

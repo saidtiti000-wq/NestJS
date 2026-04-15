@@ -34,7 +34,12 @@ export class DeviceService {
 
   loadDevices(): void {
     this.isLoading$.next(true);
-    this.http.get<Device[]>('http://localhost:3001/devices').subscribe({
+    this.http.get<any[]>('http://localhost:3001/devices').pipe(
+      map(devices => devices.map(d => ({
+        ...d,
+        id: d.id || d._id
+      })))
+    ).subscribe({
       next: (devices) => {
         this.devices$.next(devices);
         this.isLoading$.next(false);
@@ -55,11 +60,19 @@ export class DeviceService {
   }
 
   getDevice(id: string): Observable<Device> {
-    return this.http.get<Device>(`http://localhost:3001/devices/${id}`);
+    return this.http.get<any>(`http://localhost:3001/devices/${id}`).pipe(
+      map(dev => ({
+        ...dev,
+        id: dev.id || dev._id
+      }))
+    );
   }
 
   updateDevice(id: string, device: DeviceMutationPayload): Observable<Device> {
-    return this.http.patch<Device>(`http://localhost:3001/devices/${id}`, device).pipe(
+    const { id: _unusedId, ...sanitizedDevice } = device as any;
+    const { _id: _unusedMongoId, ...finalPayload } = sanitizedDevice;
+    
+    return this.http.patch<Device>(`http://localhost:3001/devices/${id}`, finalPayload).pipe(
       tap(() => {
         this.loadDevices();
       })

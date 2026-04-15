@@ -3,6 +3,5 @@ export {
   DeviceNotFoundException,
   InvalidDeviceStatusException,
   DuplicateDeviceException,
-  InvalidInputException,
-  InternalServerException,
 } from './device.exceptions';
+export { ERROR_CODES, ERROR_MESSAGES } from './error.constants';

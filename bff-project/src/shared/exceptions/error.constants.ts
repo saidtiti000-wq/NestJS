@@ -1,13 +1,13 @@
 export const ERROR_CODES = {
-  // Device errors
+  // Erreurs liées aux appareils
   DEVICE_NOT_FOUND: 'DEVICE_NOT_FOUND',
   INVALID_DEVICE_STATUS: 'INVALID_DEVICE_STATUS',
   DUPLICATE_DEVICE: 'DUPLICATE_DEVICE',
 
-  // Validation errors
+  // Erreurs de validation de données
   INVALID_INPUT: 'INVALID_INPUT',
 
-  // Server errors
+  // Erreurs système générales
   INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
 };
 

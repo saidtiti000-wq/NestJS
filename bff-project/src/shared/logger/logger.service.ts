@@ -10,7 +10,7 @@ export class LoggerService {
    */
   debug(context: string, message: string, data?: any) {
     this.logger.debug(
-      `[${context}] ${message}${data ? ` | ${JSON.stringify(data)}` : ''}`,
+      `${message}${data ? ` | ${JSON.stringify(data)}` : ''}`,
       context,
     );
   }
@@ -21,7 +21,7 @@ export class LoggerService {
    */
   log(context: string, message: string, data?: any) {
     this.logger.log(
-      `[${context}] ${message}${data ? ` | ${JSON.stringify(data)}` : ''}`,
+      `${message}${data ? ` | ${JSON.stringify(data)}` : ''}`,
       context,
     );
   }
@@ -32,7 +32,7 @@ export class LoggerService {
    */
   warn(context: string, message: string, data?: any) {
     this.logger.warn(
-      `[${context}] ${message}${data ? ` | ${JSON.stringify(data)}` : ''}`,
+      `${message}${data ? ` | ${JSON.stringify(data)}` : ''}`,
       context,
     );
   }
@@ -45,7 +45,7 @@ export class LoggerService {
     const errorStack = error?.stack || error?.toString() || '';
     const errorInfo = data ? ` | ${JSON.stringify(data)}` : '';
     this.logger.error(
-      `[${context}] ${message}${errorInfo}\n${errorStack}`,
+      `${message}${errorInfo}\n${errorStack}`,
       errorStack,
       context,
     );
@@ -62,7 +62,7 @@ export class LoggerService {
     duration: number,
   ) {
     this.logger.log(
-      `[${context}] ${method} ${path} - ${statusCode} (${duration}ms)`,
+      `${method} ${path} - ${statusCode} (${duration}ms)`,
       context,
     );
   }
