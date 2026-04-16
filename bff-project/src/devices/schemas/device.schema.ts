@@ -51,5 +51,5 @@ export class Device {
   // Date de dernière activité enregistrée
   lastSeen: string;
 }
-
+// outil genere le shema mongoose a partir de la classe Device de type ts
 export const DeviceSchema = SchemaFactory.createForClass(Device);

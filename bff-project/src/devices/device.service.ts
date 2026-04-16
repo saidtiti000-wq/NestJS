@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
+import { Device } from './schemas/device.schema';
 import { DeviceRepository } from './repositories/device.repository';
 import {
   DeviceNotFoundException,
@@ -20,7 +21,7 @@ export class DevicesService {
   ) {}
 
   // Récupère la liste de tous les appareils enregistrés
-  async findAll() {
+  async findAll(): Promise<Device[]> {
     this.loggerService.log(this.constructor.name, 'Fetching all devices');
     try {
       const devices = await this.deviceRepository.findAll();
@@ -33,7 +34,7 @@ export class DevicesService {
   }
 
   // Récupère un appareil spécifique par son identifiant unique
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Device> {
     this.loggerService.log(this.constructor.name, `Fetching device with id: ${id}`);
     try {
       const device = await this.deviceRepository.findById(id);
@@ -53,7 +54,7 @@ export class DevicesService {
   }
 
   // Crée un nouvel appareil après vérification des doublons (Nom et IP)
-  async create(dto: CreateDeviceDto) {
+  async create(dto: CreateDeviceDto): Promise<Device> {
     this.loggerService.log(this.constructor.name, 'Creating new device', { name: dto.name });
 
     // Check for existing device with same name
@@ -79,7 +80,7 @@ export class DevicesService {
   }
 
   // Met à jour les informations d'un appareil existant
-  async update(id: string, dto: UpdateDeviceDto) {
+  async update(id: string, dto: UpdateDeviceDto): Promise<Device> {
     this.loggerService.log(this.constructor.name, `Updating device with id: ${id}`);
 
     // Vérifie les doublons si le nom est modifié
@@ -116,7 +117,7 @@ export class DevicesService {
   }
 
   // Supprime un appareil de la base de données par son ID
-  async remove(id: string) {
+  async remove(id: string): Promise<{ deleted: boolean }> {
     this.loggerService.log(this.constructor.name, `Deleting device with id: ${id}`);
     try {
       const result = await this.deviceRepository.delete(id);
@@ -136,7 +137,7 @@ export class DevicesService {
   }
 
   // Filtre et retourne les appareils selon leur statut (ONLINE, OFFLINE, etc.)
-  async findByStatus(status: string) {
+  async findByStatus(status: string): Promise<Device[]> {
     this.loggerService.log(this.constructor.name, `Fetching devices with status: ${status}`);
 
     // Validate status parameter
@@ -156,7 +157,7 @@ export class DevicesService {
   }
 
   // Retourne le nombre total d'appareils présents dans le système
-  async getTotalDeviceCount() {
+  async getTotalDeviceCount(): Promise<number> {
     this.loggerService.log(this.constructor.name, 'Counting total devices');
     try {
       const count = await this.deviceRepository.count();

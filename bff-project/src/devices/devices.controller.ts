@@ -10,6 +10,7 @@ import {
 
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
+import { Device } from './schemas/device.schema';
 import { DevicesService } from './device.service';
 import { LoggerService } from '../shared/logger/logger.service';
 
@@ -24,21 +25,21 @@ export class DevicesController {
 
   // Endpoint GET pour récupérer tous les appareils
   @Get()
-  async findAll() {
+  async findAll(): Promise<Device[]> {
     this.loggerService.log(this.constructor.name, 'Fetching all devices');
     return this.devicesService.findAll();
   }
 
   // Endpoint GET pour filtrer les appareils par statut
   @Get('status/:status')
-  async findByStatus(@Param('status') status: string) {
+  async findByStatus(@Param('status') status: string): Promise<Device[]> {
     this.loggerService.log(this.constructor.name, `Fetching devices by status: ${status}`);
     return this.devicesService.findByStatus(status);
   }
 
   // Endpoint GET pour obtenir le décompte total des appareils
   @Get('count')
-  async getCount() {
+  async getCount(): Promise<{ total: number }> {
     this.loggerService.log(this.constructor.name, 'Fetching device count');
     const count = await this.devicesService.getTotalDeviceCount();
     return { total: count };
@@ -46,28 +47,28 @@ export class DevicesController {
 
   // Endpoint GET pour récupérer un appareil par son ID
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<Device> {
     this.loggerService.log(this.constructor.name, `Fetching device: ${id}`);
     return this.devicesService.findOne(id);
   }
 
   // Endpoint POST pour la création d'un nouvel appareil
   @Post()
-  async create(@Body() dto: CreateDeviceDto) {
+  async create(@Body() dto: CreateDeviceDto): Promise<Device> {
     this.loggerService.log(this.constructor.name, 'Creating new device', { name: dto.name });
     return this.devicesService.create(dto);
   }
 
   // Endpoint PATCH pour modifier partiellement un appareil
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() dto: UpdateDeviceDto) {
+  async update(@Param('id') id: string, @Body() dto: UpdateDeviceDto): Promise<Device> {
     this.loggerService.log(this.constructor.name, `Updating device: ${id}`);
     return this.devicesService.update(id, dto);
   }
 
   // Endpoint DELETE pour supprimer un appareil
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string): Promise<{ deleted: boolean }> {
     this.loggerService.log(this.constructor.name, `Deleting device: ${id}`);
     return this.devicesService.remove(id);
   }

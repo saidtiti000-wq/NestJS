@@ -11,7 +11,7 @@ import { LoggerService } from './logger.service';
 @Injectable()
 // Intercepteur pour journaliser toutes les requêtes HTTP entrantes et sortantes
 export class HttpLoggingInterceptor implements NestInterceptor {
-  constructor(private readonly loggerService: LoggerService) {}
+  constructor(private readonly loggerService: LoggerService) { }
 
   // Intercepte la requête, calcule la durée et journalise le résultat
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
